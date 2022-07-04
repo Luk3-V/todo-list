@@ -1,0 +1,104 @@
+:root {
+  --primary: black;
+  --secondary: aliceblue;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+button {
+    padding: 5px 10px;
+	cursor: pointer;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.header {
+    padding: 25px;
+}
+
+.content {
+    display: flex;
+    min-height: auto;
+    height: calc(100vh - 87px);
+}
+
+.sidebar {
+    width: 350px;
+    border: 1px solid darkgrey;
+    padding: 25px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid darkgrey;
+    width: 100%;
+    padding: 25px;
+}
+
+/*--------- MAIN -------*/
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.emoji {
+    font-size: 36px;
+}
+
+.title {
+    margin: 25px 0 25px 0;
+}
+
+.tasklist {
+    
+}
+
+.task {
+    display: flex;
+    padding: 5px 0;
+}
+.task:hover {
+    background-color: var(--secondary);
+}
+.task > input:hover, i:hover, .task-date:hover{
+    cursor: pointer;
+}
+.task-content {
+    display: flex;
+    width: 100%;
+    margin-left: 10px;
+}
+.task-content:hover {
+    cursor: text;
+}
+.task-date {
+    display:flex;
+    margin-left: 10px;
+    color: cornflowerblue;
+}
+.task-date > i {
+    margin-right: 5px;
+}
+
+/*--------- SIDEBAR -------*/
+
+.page {
+    display: flex;
+    padding: 5px 0;
+}
+.page:hover {
+    background-color: var(--secondary);
+}
+.page > span:nth-child(2) {
+    width: 100%;
+    margin-left: 5px;
+}
