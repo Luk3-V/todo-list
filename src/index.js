@@ -1,29 +1,34 @@
 const { default: Page } = require("./Page");
 const { default: Task } = require("./Task");
 const { default: View } = require("./View");
-
+const { default: Controller } = require("./Controller");
+const { format } = require("date-fns")
 
 /* -------------------------------------------*/
 
 const page1 = new Page('page1', '🙂');
 const page2 = new Page('page2', '🙃');
-const date = new Date();
+const date = format(new Date(), 'LLL dd, yyyy')
 const task1 = new Task('task 1', date);
 const task2 = new Task('task 2');
 page1.tasklist.push(task1);
 page1.tasklist.push(task2);
 
-const view = new View();
+Controller.savePageList([page1, page2]);
 
-view.displayPage(page1);
+View.load();
+View.displayPage(page1);
+View.displayPageList([page1, page2])
 
-view.displayPageList([page1, page1])
 
 
 // TODO
-// switch page view
-// Add task button
-// Add project button
+
+// local storage -------
+// switch page view ---------
+// intitial load ~~
+// Add task button ~~
+// Add project button 
 // complete task
 // uncomplete task
 // delete task

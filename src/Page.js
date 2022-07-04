@@ -3,6 +3,7 @@ export default class Page {
         this._title = title;
         this._emoji = emoji;
         this._tasklist = [];
+        this._id =  Math.random().toString(16).slice(2);
     }
 
     get title() {
@@ -26,11 +27,7 @@ export default class Page {
         this._tasklist = tasklist;
     }
 
-    addTask(task) {
-        this._tasklist.push(task);
-    }
-
-    removeTask(task) {
-        
+    get id() {
+        return this._id;
     }
 }

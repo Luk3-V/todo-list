@@ -50,6 +50,10 @@ button {
     margin: 0 auto;
 }
 
+.page-id {
+    display: none;
+}
+
 .emoji {
     font-size: 36px;
 }
