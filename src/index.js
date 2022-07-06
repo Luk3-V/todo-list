@@ -10,6 +10,7 @@ const page1 = new Page('page1', '🙂');
 const page2 = new Page('page2', '🙃');
 const date = format(new Date(), 'LLL dd, yyyy')
 const task1 = new Task('task 1', date);
+task1.isDone = true;
 const task2 = new Task('task 2');
 page1.tasklist.push(task1);
 page1.tasklist.push(task2);
@@ -29,15 +30,19 @@ View.displayPageList([page1, page2])
 // intitial load ~~
 // Add task button ~~
 // Add project button 
-// complete task
-// uncomplete task
+// complete task -------------
+// uncomplete task -----------
 // delete task
 // delete project
-// edit task title
+// edit task title -----------
 // edit project title
 // edit emoji
 // add due date to task
 // add due date to project
+// edit task menu
+// edit project menu
+// refesh task only in view
+// seperate completed list
 
 // move tasks
 // move projects

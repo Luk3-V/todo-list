@@ -30,6 +30,24 @@ export default class Controller {
         Controller.savePageList(pagelist);
     }
 
+    static toggleTaskDone(pageID, taskID) {
+        let pagelist = Controller.getPageList();
+        let page = pagelist.find(page => page.id == pageID);
+        let task = page.tasklist.find(task => task.id == taskID);
+        task.isDone = !task.isDone;
+
+        Controller.savePageList(pagelist);
+    }
+
+    static editTaskTitle(title, pageID, taskID) {
+        let pagelist = Controller.getPageList();
+        let page = pagelist.find(page => page.id == pageID);
+        let task = page.tasklist.find(task => task.id == taskID);
+        task.title = title;
+
+        Controller.savePageList(pagelist);
+    }
+
     static getPage(pageID) {
         let pagelist = Controller.getPageList();
         let page = pagelist.find(page => page.id == pageID);
