@@ -46,7 +46,7 @@ button {
 
 .container {
     width: 100%;
-    max-width: 900px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -76,18 +76,20 @@ button {
 .task > input:hover, i:hover, .task-date:hover{
     cursor: pointer;
 }
-.task-content {
-    display: flex;
+.task-title {
     width: 100%;
     margin-left: 10px;
 }
-.task-content:hover {
+.task-title.checked {
+    text-decoration: line-through;
+}
+.task-title:hover {
     cursor: text;
 }
 .task-date {
-    display:flex;
-    margin-left: 10px;
+    margin: 0 10px;
     color: cornflowerblue;
+    white-space: nowrap;
 }
 .task-date > i {
     margin-right: 5px;
