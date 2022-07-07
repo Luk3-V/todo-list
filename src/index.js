@@ -31,7 +31,7 @@ View.displayPageList([page1, page2])
 // Add project button 
 // complete task -------------
 // uncomplete task -----------
-// delete task
+// delete task -------------
 // delete project
 // edit task title -----------
 // edit project title

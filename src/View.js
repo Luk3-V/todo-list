@@ -73,9 +73,9 @@ export default class View {
         <div class="edit-container">
         <i class="fa-solid fa-ellipsis task-edit"></i>
         <ul class="edit-menu hidden">
-        <li><i class="fa-regular fa-calendar"></i>Due Date</li>
-        <li><i class="fa-regular fa-clone"></i>Duplicate</li>    
-        <li><i class="fa-regular fa-trash-can"></i></i>Delete</li>
+        <li class="task-date"><i class="fa-regular fa-calendar"></i>Due Date</li>
+        <li class="task-duplicate"><i class="fa-regular fa-clone"></i>Duplicate</li>    
+        <li class="task-delete"><i class="fa-regular fa-trash-can"></i></i>Delete</li>
         </ul></div>`;
         
         if(task.isDone){
@@ -119,7 +119,7 @@ export default class View {
             }
         } 
         else if(e.target.matches(".task-date")) {
-
+            console.log("date");
         } 
         else if(e.target.matches(".task-edit")) { // on edit click, close other menus, show menu, when clicked elsewhere close menu
             document.querySelectorAll('.edit-menu').forEach(menu => {
@@ -136,6 +136,11 @@ export default class View {
                     menu.classList.add("hidden");
                 }
             }
+        } else if(e.target.matches(".task-delete")) {
+            Controller.deleteTask(pageIDElement.id, taskID);
+
+            let page = Controller.getPage(pageIDElement.id);
+            View.displayTaskList(page.tasklist);
         }
     }
 

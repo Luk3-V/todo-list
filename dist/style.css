@@ -92,7 +92,7 @@ i {
 .task-title:hover {
     cursor: text;
 }
-.task-date {
+span.task-date {
     margin: 0 10px;
     color: cornflowerblue;
     white-space: nowrap;
@@ -113,6 +113,9 @@ i {
 .edit-menu > li:hover {
     cursor: pointer;
     background-color: var(--secondary);
+}
+li.task-date {
+    
 }
 
 /*--------- SIDEBAR -------*/
