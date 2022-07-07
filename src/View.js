@@ -62,7 +62,7 @@ export default class View {
         let dueDateElement = '';
 
         if(task.dueDate)
-            dueDateElement = '<span class="task-date"><i class="fa-regular fa-calendar"></i>' + task.dueDate + '</span>';
+            dueDateElement = `<span class="task-date"><i class="fa-regular fa-calendar"></i>${task.dueDate}</span>`;
 
         let taskElement = document.createElement('div');
         taskElement.classList.add('task');
@@ -70,7 +70,13 @@ export default class View {
         taskElement.innerHTML = `<input type="checkbox">
         <span class="task-title" contenteditable="true">${task.title}</span>
         ${dueDateElement}
-        <i class="fa-solid fa-ellipsis task-edit"></i>`;
+        <div class="edit-container">
+        <i class="fa-solid fa-ellipsis task-edit"></i>
+        <ul class="edit-menu hidden">
+        <li><i class="fa-regular fa-calendar"></i>Due Date</li>
+        <li><i class="fa-regular fa-clone"></i>Duplicate</li>    
+        <li><i class="fa-regular fa-trash-can"></i></i>Delete</li>
+        </ul></div>`;
         
         if(task.isDone){
             taskElement.children[0].checked = true;
@@ -101,21 +107,36 @@ export default class View {
     static taskEvent(e) {
         let taskID = e.target.closest(".task").id;
 
-        if(e.target.matches("input")) {
-            console.log("check");
+        if(e.target.matches("input")) { // on checkbox, toggle task.isDone, refresh list
             Controller.toggleTaskDone(pageIDElement.id, taskID);
-        } else if(e.target.matches(".task-title")) {
+
+            let page = Controller.getPage(pageIDElement.id);
+            View.displayTaskList(page.tasklist);
+        } 
+        else if(e.target.matches(".task-title")) { // on title click, when unfocused update new task.title
             document.activeElement.onblur = function () {
                 Controller.editTaskTitle(e.target.innerHTML, pageIDElement.id, taskID);
             }
-        } else if(e.target.matches(".task-date")) {
+        } 
+        else if(e.target.matches(".task-date")) {
 
-        }  else if(e.target.matches(".task-edit")) {
+        } 
+        else if(e.target.matches(".task-edit")) { // on edit click, close other menus, show menu, when clicked elsewhere close menu
+            document.querySelectorAll('.edit-menu').forEach(menu => {
+                if(!menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                }
+            });
 
+            let menu = e.target.nextElementSibling;
+            menu.classList.remove("hidden");
+            
+            window.onclick = function(e2) {
+                if(e2 != e) {
+                    menu.classList.add("hidden");
+                }
+            }
         }
-
-        let page = Controller.getPage(pageIDElement.id);
-        View.displayTaskList(page.tasklist);
     }
 
     static enterKeyPress(e){
@@ -139,9 +160,11 @@ export default class View {
 
         if(e.target.matches(".page-edit")){
 
-        } else if(e.target.matches(".page-emoji")) {
+        } 
+        else if(e.target.matches(".page-emoji")) {
 
-        } else {
+        } 
+        else { // on page click, display page
             let page = Controller.getPage(pageID);
             View.displayPage(page);
         }
