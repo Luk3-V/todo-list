@@ -18,6 +18,12 @@ button {
 	font-weight: bold;
 }
 
+i {
+    margin-right: 5px;
+}
+
+/* --------------------*/
+
 .header {
     padding: 25px;
 }
@@ -91,8 +97,22 @@ button {
     color: cornflowerblue;
     white-space: nowrap;
 }
-.task-date > i {
-    margin-right: 5px;
+.edit-menu {
+    background-color: white;
+    list-style-type: none;
+    border: 1px solid darkgrey;
+    position: absolute;
+    z-index: 2;
+}
+.edit-menu.hidden {
+    visibility: hidden;
+}
+.edit-menu > li {
+    padding: 5px;
+}
+.edit-menu > li:hover {
+    cursor: pointer;
+    background-color: var(--secondary);
 }
 
 /*--------- SIDEBAR -------*/
