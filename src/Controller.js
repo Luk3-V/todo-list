@@ -48,14 +48,31 @@ export default class Controller {
 
         Controller.savePageList(pagelist);
     }
-
-    static editTaskTitle(title, pageID, taskID) {
+    
+    static editTaskTitle(pageID, taskID, title) {
         let pagelist = Controller.getPageList();
         let page = pagelist.find(page => page.id == pageID);
         let task = page.tasklist.find(task => task.id == taskID);
         task.title = title;
 
         Controller.savePageList(pagelist);
+    }
+
+    static editTaskDate(pageID, taskID, dueDate) {
+        let pagelist = Controller.getPageList();
+        let page = pagelist.find(page => page.id == pageID);
+        let task = page.tasklist.find(task => task.id == taskID);
+        task.dueDate = dueDate;
+
+        Controller.savePageList(pagelist);
+    }
+
+    static getTaskDate(pageID, taskID) {
+        let pagelist = Controller.getPageList();
+        let page = pagelist.find(page => page.id == pageID);
+        let task = page.tasklist.find(task => task.id == taskID);
+
+        return task.dueDate;
     }
 
     static getPage(pageID) {

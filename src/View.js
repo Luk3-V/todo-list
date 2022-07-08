@@ -1,4 +1,6 @@
 import Controller from "./Controller";
+import flatpickr from "flatpickr";
+const { format } = require("date-fns")
 
 /* main */
 const pageIDElement = document.querySelector('.page-id');
@@ -7,8 +9,6 @@ const titleElement = document.querySelector('.title');
 const tasklistElement = document.querySelector('.tasklist');
 /*sidebar*/
 const pagelistElement = document.querySelector('.pagelist');
-
-
 
 export default class View {
     static load() {
@@ -38,6 +38,10 @@ export default class View {
         tasklist.forEach(t => {
             tasklistElement.appendChild(View.createTaskElement(t));
         });
+        flatpickr(".task-date", {
+            onChange: View.editTaskDate,
+            onOpen: View.setCalenderDate
+        });
     }
 
     static displayPage(page) {
@@ -61,8 +65,10 @@ export default class View {
     static createTaskElement(task) {
         let dueDateElement = '';
 
-        if(task.dueDate)
-            dueDateElement = `<span class="task-date"><i class="fa-regular fa-calendar"></i>${task.dueDate}</span>`;
+        if(task.dueDate){
+            let dueDateFormatted = format(new Date(task.dueDate), 'LLL dd yyyy');
+            dueDateElement = `<span class="task-date"><i class="fa-regular fa-calendar"></i>${dueDateFormatted}</span>`;
+        }
 
         let taskElement = document.createElement('div');
         taskElement.classList.add('task');
@@ -115,12 +121,9 @@ export default class View {
         } 
         else if(e.target.matches(".task-title")) { // on title click, when unfocused update new task.title
             document.activeElement.onblur = function () {
-                Controller.editTaskTitle(e.target.innerHTML, pageIDElement.id, taskID);
+                Controller.editTaskTitle(pageIDElement.id, taskID, e.target.innerHTML);
             }
-        } 
-        else if(e.target.matches(".task-date")) {
-            console.log("date");
-        } 
+        }  
         else if(e.target.matches(".task-edit")) { // on edit click, close other menus, show menu, when clicked elsewhere close menu
             document.querySelectorAll('.edit-menu').forEach(menu => {
                 if(!menu.classList.contains('hidden')) {
@@ -158,6 +161,23 @@ export default class View {
         View.displayTaskList(page.tasklist);
     }
 
+    static editTaskDate(selectedDates, dateStr, instance) {
+        let taskID = instance.element.closest(".task").id;
+        let dueDate = new Date(instance.selectedDates[0]);
+        dueDate.setMinutes(dueDate.getMinutes() + dueDate.getTimezoneOffset());
+        Controller.editTaskDate(pageIDElement.id, taskID, dueDate.toDateString());
+
+        let page = Controller.getPage(pageIDElement.id);
+        View.displayTaskList(page.tasklist);
+    }
+
+    static setCalenderDate(selectedDates, dateStr, instance) {
+        let taskID = instance.element.closest(".task").id;
+        let dueDate = Controller.getTaskDate(pageIDElement.id, taskID);
+        if(dueDate)
+            instance.setDate(new Date(dueDate));
+    }
+
     // --- SIDEBAR EVENTS ---
 
     static pageEvent(e) {
@@ -176,6 +196,6 @@ export default class View {
     }
 
     static addPage(e) {
-
+        
     }
 }
