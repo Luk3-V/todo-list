@@ -2,12 +2,12 @@ import Controller from "./Controller";
 import flatpickr from "flatpickr";
 const { format } = require("date-fns")
 
-/* main */
+// main 
 const pageIDElement = document.querySelector('.page-id');
 const emojiElement = document.querySelector('.emoji');
 const titleElement = document.querySelector('.title');
 const tasklistElement = document.querySelector('.tasklist');
-/*sidebar*/
+// sidebar
 const pagelistElement = document.querySelector('.pagelist');
 
 export default class View {
@@ -23,7 +23,7 @@ export default class View {
         addPageButton.addEventListener("click", View.addPage);
     }
 
-    // --- MAIN DISPLAY ---
+    // ------- MAIN DISPLAY -------
 
     static displayEmoji(emoji) {
         emojiElement.innerHTML = emoji;
@@ -51,7 +51,7 @@ export default class View {
         View.displayTaskList(page.tasklist);
     }
 
-    // --- SIDEBAR DISPLAY ---
+    // ------- SIDEBAR DISPLAY -------
 
     static displayPageList(pageList) {
         pagelistElement.innerHTML = '';
@@ -60,7 +60,7 @@ export default class View {
         });
     }
 
-    // --- CREATE ELEMENTS ---
+    // ------- CREATE ELEMENTS -------
 
     static createTaskElement(task) {
         let dueDateElement = '';
@@ -108,21 +108,20 @@ export default class View {
         return pageElement;
     }
 
-    // --- MAIN EVENTS ---
+    // ------- MAIN EVENTS -------
 
     static taskEvent(e) {
         let taskID = e.target.closest(".task").id;
 
-        if(e.target.matches("input")) { // on checkbox, toggle task.isDone, refresh list
+        if(e.target.matches("input")) { // on checkbox, toggle task.isDone, refresh view
             Controller.toggleTaskDone(pageIDElement.id, taskID);
-
-            let page = Controller.getPage(pageIDElement.id);
-            View.displayTaskList(page.tasklist);
         } 
         else if(e.target.matches(".task-title")) { // on title click, when unfocused update new task.title
             document.activeElement.onblur = function () {
                 Controller.editTaskTitle(pageIDElement.id, taskID, e.target.innerHTML);
+                console.log(e.target.innerHTML);
             }
+            return;
         }  
         else if(e.target.matches(".task-edit")) { // on edit click, close other menus, show menu, when clicked elsewhere close menu
             document.querySelectorAll('.edit-menu').forEach(menu => {
@@ -139,29 +138,33 @@ export default class View {
                     menu.classList.add("hidden");
                 }
             }
-        } else if(e.target.matches(".task-delete")) {
+            return;
+        } else if(e.target.matches(".task-duplicate")) { // on duplicate click, 
+            Controller.duplicateTask(pageIDElement.id, taskID);
+            console.log('dupe');
+        } else if(e.target.matches(".task-delete")) { // on delete click, delete task, refresh view
             Controller.deleteTask(pageIDElement.id, taskID);
-
-            let page = Controller.getPage(pageIDElement.id);
-            View.displayTaskList(page.tasklist);
         }
+
+        let page = Controller.getPage(pageIDElement.id);
+        View.displayTaskList(page.tasklist);
     }
 
-    static enterKeyPress(e){
+    static enterKeyPress(e){ // on enter, unfocus from editing title 
         if (e.key === 'Enter') {
             e.preventDefault();
             document.activeElement.blur();
         }
     }
 
-    static addTask(e) {
+    static addTask(e) { // on button, add task, refresh view
         Controller.addTask(pageIDElement.id);
 
         let page = Controller.getPage(pageIDElement.id);
         View.displayTaskList(page.tasklist);
     }
 
-    static editTaskDate(selectedDates, dateStr, instance) {
+    static editTaskDate(selectedDates, dateStr, instance) { // on calender change, set task date, refresh view
         let taskID = instance.element.closest(".task").id;
         let dueDate = new Date(instance.selectedDates[0]);
         dueDate.setMinutes(dueDate.getMinutes() + dueDate.getTimezoneOffset());
@@ -171,14 +174,14 @@ export default class View {
         View.displayTaskList(page.tasklist);
     }
 
-    static setCalenderDate(selectedDates, dateStr, instance) {
+    static setCalenderDate(selectedDates, dateStr, instance) { // on calender open, get task date, set calender date
         let taskID = instance.element.closest(".task").id;
         let dueDate = Controller.getTaskDate(pageIDElement.id, taskID);
         if(dueDate)
             instance.setDate(new Date(dueDate));
     }
 
-    // --- SIDEBAR EVENTS ---
+    // ------- SIDEBAR EVENTS -------
 
     static pageEvent(e) {
         let pageID = e.target.closest(".page").id;

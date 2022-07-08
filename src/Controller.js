@@ -40,6 +40,15 @@ export default class Controller {
         Controller.savePageList(pagelist);
     }
 
+    static duplicateTask(pageID, taskID) {
+        let pagelist = Controller.getPageList();
+        let page = pagelist.find(page => page.id == pageID);
+        let taskIndex = page.tasklist.findIndex(task => task.id == taskID);
+        page.tasklist.splice(taskIndex, 0, new Task(page.tasklist[taskIndex].title, page.tasklist[taskIndex].dueDate));
+
+        Controller.savePageList(pagelist);
+    }
+
     static toggleTaskDone(pageID, taskID) {
         let pagelist = Controller.getPageList();
         let page = pagelist.find(page => page.id == pageID);

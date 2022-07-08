@@ -20,8 +20,11 @@ View.displayPage(page1);
 View.displayPageList([page1, page2])
 
 
-// TODO
 
+// BUGS:
+// Fix title not bluring when replacing whole title.
+
+// TODO:
 // local storage -------
 // switch page view ---------
 // intitial load ~~
@@ -43,7 +46,7 @@ View.displayPageList([page1, page2])
 
 // move tasks
 // move projects
-// duplicate tasks
+// duplicate tasks -------------
 // duplicate projects
 // task priority
 // sub tasks
