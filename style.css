@@ -114,9 +114,9 @@ span.task-date {
     cursor: pointer;
     background-color: var(--secondary);
 }
-li.task-date {
+.edit-menu > i {
     
-}
+}   
 
 /*--------- SIDEBAR -------*/
 
