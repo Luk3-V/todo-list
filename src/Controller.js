@@ -97,4 +97,20 @@ export default class Controller {
 
         Controller.savePageList(pagelist);
     }
+
+    static editPageTitle(pageID, title) {
+        let pagelist = Controller.getPageList();
+        let page = pagelist.find(page => page.id == pageID);
+        page.title = title;
+
+        Controller.savePageList(pagelist);
+    }
+
+    static editPageEmoji(pageID, emoji) {
+        let pagelist = Controller.getPageList();
+        let page = pagelist.find(page => page.id == pageID);
+        page.emoji = emoji;
+
+        Controller.savePageList(pagelist);
+    }
 }

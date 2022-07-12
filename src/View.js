@@ -1,10 +1,12 @@
 import Controller from "./Controller";
 import flatpickr from "flatpickr";
+import 'emoji-picker-element';
 const { format } = require("date-fns")
 
 // main 
 const pageIDElement = document.querySelector('.page-id');
 const emojiElement = document.querySelector('.emoji');
+const emojiPicker = document.querySelector('emoji-picker');
 const titleElement = document.querySelector('.title');
 const tasklistElement = document.querySelector('.tasklist');
 // sidebar
@@ -13,6 +15,7 @@ const pagelistElement = document.querySelector('.pagelist');
 export default class View {
     static load() {
         View.loadButtons();
+        View.displayPageList(Controller.getPageList());
     }
 
     static loadButtons() {
@@ -27,10 +30,13 @@ export default class View {
 
     static displayEmoji(emoji) {
         emojiElement.innerHTML = emoji;
+        emojiElement.addEventListener("click", View.editPageEmoji);
     }
 
     static displayTitle(title) {
         titleElement.innerHTML = title;
+        titleElement.addEventListener("click", View.editPageTitle);
+        titleElement.addEventListener("keypress", View.enterKeyPress);
     }
     
     static displayTaskList(tasklist) { 
@@ -151,13 +157,13 @@ export default class View {
         } else {
             return;
         }
-        
+
         console.log("task event");
         let page = Controller.getPage(pageIDElement.id);
         View.displayTaskList(page.tasklist);
     }
 
-    static enterKeyPress(e){ // on enter, unfocus from editing title 
+    static enterKeyPress(e){ // on enter, unfocus from editing element 
         if (e.key === 'Enter') {
             e.preventDefault();
             document.activeElement.blur();
@@ -188,6 +194,30 @@ export default class View {
         let dueDate = Controller.getTaskDate(pageIDElement.id, taskID);
         if(dueDate)
             instance.setDate(new Date(dueDate));
+    }
+
+    static editPageTitle(e){
+        document.activeElement.onblur = function () {
+            Controller.editPageTitle(pageIDElement.id, e.target.innerHTML);
+            View.displayPageList(Controller.getPageList());
+            console.log(e.target.innerHTML);
+        }
+    }
+
+    static editPageEmoji(e){
+        emojiPicker.classList.remove("hidden");
+        emojiPicker.addEventListener('emoji-click', emoji => {
+            Controller.editPageEmoji(pageIDElement.id, emoji.detail.unicode);
+            View.displayEmoji(emoji.detail.unicode);
+            View.displayPageList(Controller.getPageList());
+            emojiPicker.classList.add("hidden");
+        });
+
+        window.onclick = function(e2) {
+            if(e2 != e && !e2.target.closest('emoji-picker')) {
+                emojiPicker.classList.add("hidden");
+            }
+        }
     }
 
     // ------- SIDEBAR EVENTS -------

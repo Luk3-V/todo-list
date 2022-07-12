@@ -17,8 +17,6 @@ Controller.savePageList([page1, page2]);
 
 View.load();
 View.displayPage(page1);
-View.displayPageList([page1, page2])
-
 
 
 // BUGS:
@@ -35,8 +33,8 @@ View.displayPageList([page1, page2])
 // delete task -------------
 // delete project
 // edit task title -----------
-// edit project title
-// edit emoji
+// edit project title ---------
+// edit emoji -------------
 // add due date to task -------------
 // add due date to project
 // edit task menu --------------

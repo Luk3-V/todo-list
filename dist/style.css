@@ -22,6 +22,10 @@ i {
     margin-right: 5px;
 }
 
+.hidden {
+    visibility: hidden;
+}
+
 /* --------------------*/
 
 .header {
@@ -63,9 +67,20 @@ i {
 .emoji {
     font-size: 36px;
 }
+.emoji:hover {
+    cursor: pointer;
+    background-color: var(--secondary);
+}
+emoji-picker {
+    position: absolute;
+    transform: translateX(-50px);
+}
 
 .title {
     margin: 25px 0 25px 0;
+}
+.title:hover {
+    background-color: var(--secondary);
 }
 
 .tasklist {
@@ -104,9 +119,6 @@ span.task-date {
     position: absolute;
     z-index: 2;
 }
-.edit-menu.hidden {
-    visibility: hidden;
-}
 .edit-menu > li {
     padding: 5px;
 }
@@ -114,8 +126,8 @@ span.task-date {
     cursor: pointer;
     background-color: var(--secondary);
 }
-.edit-menu > i {
-    
+.edit-menu > li > i {
+    pointer-events: none;
 }   
 
 /*--------- SIDEBAR -------*/
