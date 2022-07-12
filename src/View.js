@@ -33,11 +33,15 @@ export default class View {
         titleElement.innerHTML = title;
     }
     
-    static displayTaskList(tasklist) {
+    static displayTaskList(tasklist) { 
+        if(document.querySelector(".task-date"))
+            document.querySelectorAll(".task-date").forEach(e => e._flatpickr.destroy());  // delete existing calenders  
+
         tasklistElement.innerHTML = '';
         tasklist.forEach(t => {
             tasklistElement.appendChild(View.createTaskElement(t));
         });
+
         flatpickr(".task-date", {
             onChange: View.editTaskDate,
             onOpen: View.setCalenderDate
@@ -144,8 +148,11 @@ export default class View {
             console.log('dupe');
         } else if(e.target.matches(".task-delete")) { // on delete click, delete task, refresh view
             Controller.deleteTask(pageIDElement.id, taskID);
+        } else {
+            return;
         }
-
+        
+        console.log("task event");
         let page = Controller.getPage(pageIDElement.id);
         View.displayTaskList(page.tasklist);
     }
@@ -169,6 +176,8 @@ export default class View {
         let dueDate = new Date(instance.selectedDates[0]);
         dueDate.setMinutes(dueDate.getMinutes() + dueDate.getTimezoneOffset());
         Controller.editTaskDate(pageIDElement.id, taskID, dueDate.toDateString());
+
+        console.log("date change");
 
         let page = Controller.getPage(pageIDElement.id);
         View.displayTaskList(page.tasklist);
