@@ -5,13 +5,17 @@ const { default: Controller } = require("./Controller");
 
 /* -------------------------------------------*/
 
-const page1 = new Page('page1', '🙂');
-const page2 = new Page('page2', '🙃');
+const page1 = new Page('Welcome to your todo-list!', '👋');
+const page2 = new Page('Untitled', '📄');
 const date = new Date();
-const task1 = new Task('task 1', date);
-const task2 = new Task('task 2');
+const task1 = new Task('Open the todo-list app', date);
+const task2 = new Task('Click the task text, title, & emoji to edit');
+const task3 = new Task('Use the 3 dots to set due-date, duplicate, or delete');
+
+task1.isDone = true;
 page1.tasklist.push(task1);
 page1.tasklist.push(task2);
+page1.tasklist.push(task3);
 
 Controller.savePageList([page1, page2]);
 
@@ -25,33 +29,39 @@ View.displayPage(page1);
 // TODO:
 // local storage -------
 // switch page view ---------
-// intitial load ~~
-// Add task button ~~
-// Add project button 
+// Add project button -----------
 // complete task -------------
 // uncomplete task -----------
 // delete task -------------
-// delete project
+// delete project --------------
 // edit task title -----------
 // edit project title ---------
 // edit emoji -------------
 // add due date to task -------------
 // add due date to project
 // edit task menu --------------
-// edit project menu
-// refesh task only in view
-// seperate completed list
-
-// move tasks
-// move projects
+// edit project menu ----------------
 // duplicate tasks -------------
-// duplicate projects
-// task priority
-// sub tasks
+// duplicate projects ------------
+// rename pages ----------
+
+// intitial load ~~
+// Add task button ~~ (add focus)
+
+// refesh task only in view 
 // project progress bar
+// darkmode toggle
+// collapsable sidebar
+// Style CSS
+// Clean up code
 
 // Home tab
-// daily tasks
-// weekly tasks
-// all tasks
-// priority tasks
+// daily tasks tab
+// weekly tasks tab
+// all tasks tab
+// priority tasks tab
+// seperate completed list
+// sub tasks
+// task priority
+// move tasks
+// move projects

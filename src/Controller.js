@@ -93,8 +93,31 @@ export default class Controller {
 
     static addPage() {
         let pagelist = Controller.getPageList();
-        pagelist.push(new Page());
+        pagelist.push(new Page('Untitled', '📄'));
 
+        Controller.savePageList(pagelist);
+    }
+
+    static deletePage(pageID) {
+        let pagelist = Controller.getPageList();
+        pagelist = pagelist.filter(page => {
+            return page.id !== pageID;
+        });
+
+        Controller.savePageList(pagelist);
+    }
+
+    static duplicatePage(pageID) {
+        let pagelist = Controller.getPageList();
+        let pageIndex = pagelist.findIndex(page => page.id == pageID);
+        let pageCopy = new Page(pagelist[pageIndex].title + ' (Copy)', pagelist[pageIndex].emoji);
+        pageCopy.tasklist = pagelist[pageIndex].tasklist.map(task => {
+            let taskCopy = new Task(task.title, task.dueDate);
+            taskCopy.isDone = task.isDone;
+            return taskCopy;
+        });
+        pagelist.splice(pageIndex+1, 0, pageCopy);
+        
         Controller.savePageList(pagelist);
     }
 

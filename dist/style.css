@@ -138,6 +138,7 @@ span.task-date {
 }
 .page:hover {
     background-color: var(--secondary);
+    cursor: pointer;
 }
 .page > span:nth-child(2) {
     width: 100%;

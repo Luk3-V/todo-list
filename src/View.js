@@ -110,10 +110,17 @@ export default class View {
         pageElement.classList.add('page');
         pageElement.id = page.id;
         pageElement.innerHTML = `<span class="page-emoji">${page.emoji}</span>
-        <span>${page.title}</span>
-        <i class="fa-solid fa-ellipsis page-edit"></i>`;
+        <span class="page-title">${page.title}</span>
+        <div class="edit-container">
+        <i class="fa-solid fa-ellipsis page-edit"></i>
+        <ul class="edit-menu hidden">
+        <li class="page-rename"><i class="fa-regular fa-pen-to-square"></i>Rename</li>
+        <li class="page-duplicate"><i class="fa-regular fa-clone"></i>Duplicate</li>    
+        <li class="page-delete"><i class="fa-regular fa-trash-can"></i></i>Delete</li>
+        </ul></div>`;
 
         pageElement.addEventListener("click", View.pageEvent);
+        pageElement.querySelector(".page-title").addEventListener("keypress", View.enterKeyPress);
 
         return pageElement;
     }
@@ -161,13 +168,6 @@ export default class View {
         console.log("task event");
         let page = Controller.getPage(pageIDElement.id);
         View.displayTaskList(page.tasklist);
-    }
-
-    static enterKeyPress(e){ // on enter, unfocus from editing element 
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            document.activeElement.blur();
-        }
     }
 
     static addTask(e) { // on button, add task, refresh view
@@ -226,10 +226,51 @@ export default class View {
         let pageID = e.target.closest(".page").id;
 
         if(e.target.matches(".page-edit")){
+            document.querySelectorAll('.edit-menu').forEach(menu => {
+                if(!menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                }
+            });
 
+            let menu = e.target.nextElementSibling;
+            menu.classList.remove("hidden");
+            
+            window.onclick = function(e2) {
+                if(e2 != e) {
+                    menu.classList.add("hidden");
+                }
+            }
         } 
-        else if(e.target.matches(".page-emoji")) {
+        else if(e.target.matches(".page-rename")) {
+            let title = e.target.closest(".page").querySelector('.page-title');
+            title.contentEditable = true;
+            title.focus();
 
+            document.activeElement.onblur = function () {
+                title.contentEditable = false;
+                Controller.editPageTitle(pageID, title.innerHTML);
+                console.log(title.innerHTML);
+                if(pageID == pageIDElement.id){
+                    let page = Controller.getPage(pageID);
+                    View.displayPage(page);
+                }
+            }
+        }
+        else if(e.target.matches(".page-duplicate")) {
+            Controller.duplicatePage(pageID);
+
+            let pagelist = Controller.getPageList();
+            View.displayPageList(pagelist);
+        }
+        else if(e.target.matches(".page-delete")) {
+            Controller.deletePage(pageID);
+
+            let pagelist = Controller.getPageList();
+            if(pagelist.length == 0)
+                console.log("no pages");// TODO add no pages display
+            else if(pageID == pageIDElement.id)   
+                View.displayPage(pagelist[0]);
+            View.displayPageList(pagelist);
         } 
         else { // on page click, display page
             let page = Controller.getPage(pageID);
@@ -238,6 +279,20 @@ export default class View {
     }
 
     static addPage(e) {
-        
+        Controller.addPage();
+
+        let pagelist = Controller.getPageList();
+        View.displayPage(pagelist[pagelist.length - 1]);
+        View.displayPageList(pagelist);
+    }
+
+    // -------- GLOBAL EVENTS -----------
+
+    static enterKeyPress(e){ // on enter, unfocus from editing element 
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            document.activeElement.blur();
+        }
     }
 }
+
