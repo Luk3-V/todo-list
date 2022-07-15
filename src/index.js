@@ -44,13 +44,13 @@ View.displayPage(page1);
 // duplicate tasks -------------
 // duplicate projects ------------
 // rename pages ----------
+// darkmode toggle ------------------
 
 // intitial load ~~
 // Add task button ~~ (add focus)
 
 // refesh task only in view 
 // project progress bar
-// darkmode toggle
 // collapsable sidebar
 // Style CSS
 // Clean up code

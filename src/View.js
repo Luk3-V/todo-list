@@ -3,6 +3,7 @@ import flatpickr from "flatpickr";
 import 'emoji-picker-element';
 const { format } = require("date-fns")
 
+const sliderElement = document.querySelector('.switch'); 
 // main 
 const pageIDElement = document.querySelector('.page-id');
 const emojiElement = document.querySelector('.emoji');
@@ -22,6 +23,7 @@ export default class View {
         const addTaskButton = document.querySelector('.button-add-task');
         const addPageButton = document.querySelector('.button-add-page');
 
+        sliderElement.addEventListener("click", View.toggleDarkMode);
         addTaskButton.addEventListener("click", View.addTask);
         addPageButton.addEventListener("click", View.addPage);
     }
@@ -293,6 +295,20 @@ export default class View {
             e.preventDefault();
             document.activeElement.blur();
         }
+    }
+
+    static toggleDarkMode(e) {
+        document.body.classList.toggle("dark-mode");
+        sliderElement.closest('.switch_box').querySelector('.fa-sun').classList.toggle('hidden');
+        sliderElement.closest('.switch_box').querySelector('.fa-moon').classList.toggle('hidden');
+        document.querySelector('emoji-picker').classList.toggle('light');
+        if(document.body.classList.contains('dark-mode'))
+            document.querySelectorAll('link[rel=stylesheet]')[2].setAttribute('href','../node_modules/flatpickr/dist/themes/dark.css');
+        else
+            document.querySelectorAll('link[rel=stylesheet]')[2].setAttribute('href','../node_modules/flatpickr/dist/flatpickr.min.css');
+
+        let page = Controller.getPage(pageIDElement.id);
+        View.displayTaskList(page.tasklist);
     }
 }
 
