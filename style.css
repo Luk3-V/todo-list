@@ -1,7 +1,3 @@
-:root {
-  
-}
-
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -9,8 +5,18 @@
 }
 
 button {
-    padding: 5px 10px;
+    margin-top: 25px;
+    padding: 10px 10px;
 	cursor: pointer;
+    background-color: var(--secondary);
+    color: var(--primary);
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 100%;
+}
+button:hover {
+    background-color: var(--buttonhover);
 }
 
 .bold {
@@ -28,8 +34,11 @@ i {
 /*----LIGHT MODE----*/
 body {
     --background: white;
+    --border: #ccc;
     --primary: black;
     --secondary: aliceblue;
+    --buttonhover: rgb(224, 240, 255);
+    --checked: grey;
     background-color: var(--background);
     color: var(--primary);
     text-decoration-color: var(--primary);
@@ -38,44 +47,61 @@ body {
 /*----DARK MODE----*/
 body.dark-mode {
     --background: rgb(20, 20, 20);
-    --primary: white;
+    --border: #444;
+    --primary: whitesmoke;
     --secondary: rgb(45, 45, 45);
-    background-color: rgb(20, 20, 20);
-    color: whitesmoke;
-    text-decoration-color: whitesmoke;
+    --buttonhover: rgb(60, 60, 60);
+    --checked: #999;
 }
 
 /*-----------------------------------*/
 
 .header {
     padding: 25px;
+    border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
+    font-family: Helvetica, sans-serif;
+}
+.logo{
+    align-self: center;
 }
 
 .content {
     display: flex;
     min-height: auto;
     height: calc(100vh - 87px);
+    font-family: Helvetica, sans-serif;
 }
 
 .sidebar {
-    width: 350px;
-    border: 1px solid darkgrey;
+    max-width: 300px;
+    border-right: 1px solid var(--border);
     padding: 25px;
+    transition: .5s;
+}
+.sidebar > h3 {
+    margin-bottom: 25px;
+}
+.sidebar.collapsed {
+    transform: translateX(-100%);
+    transition: .5s;
+}
+.sidebar.visable {
+    content-visibility: hidden;
 }
 
 .main {
     display: flex;
     flex-direction: column;
-    border: 1px solid darkgrey;
     width: 100%;
     padding: 25px;
+    transition: width .5s;
 }
 
 /*--------- MAIN -------*/
 
-.container {
+.main > .container {
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
@@ -86,7 +112,8 @@ body.dark-mode {
 }
 
 .emoji {
-    font-size: 36px;
+    font-size: 3em;
+    border-radius: 2px;
 }
 .emoji:hover {
     cursor: pointer;
@@ -95,10 +122,12 @@ body.dark-mode {
 emoji-picker {
     position: absolute;
     transform: translateX(-50px);
+    border-radius: 2px;
 }
 
 .title {
     margin: 25px 0 25px 0;
+    border-radius: 2px;
 }
 .title:hover {
     background-color: var(--secondary);
@@ -110,7 +139,8 @@ emoji-picker {
 
 .task {
     display: flex;
-    padding: 5px 0;
+    padding: 7px 0;
+    border-radius: 2px;
 }
 .task:hover {
     background-color: var(--secondary);
@@ -124,24 +154,26 @@ emoji-picker {
 }
 .task-title.checked {
     text-decoration: line-through;
+    color: var(--checked);
 }
 .task-title:hover {
     cursor: text;
 }
 span.task-date {
-    margin: 0 10px;
+    margin: 0 15px;
     color: cornflowerblue;
     white-space: nowrap;
 }
 .edit-menu {
     background-color: var(--background);
     list-style-type: none;
-    border: 1px solid darkgrey;
+    border: 1px solid var(--border);
     position: absolute;
     z-index: 2;
+    border-radius: 5px;
 }
 .edit-menu > li {
-    padding: 5px;
+    padding: 7px;
 }
 .edit-menu > li:hover {
     cursor: pointer;
@@ -155,7 +187,8 @@ span.task-date {
 
 .page {
     display: flex;
-    padding: 5px 0;
+    padding: 7px 0;
+    border-radius: 2px;
 }
 .page:hover {
     background-color: var(--secondary);
@@ -163,20 +196,27 @@ span.task-date {
 }
 .page > span:nth-child(2) {
     width: 100%;
-    margin-left: 5px;
+    margin: 0 15px 0 5px;
+    align-self: center;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+.page > span:nth-child(3) {
+    align-self: center;
 }
 
 /*--------- SLIDER ----------*/
 .fa-moon {
     position: absolute;
     z-index: 1;
-    transform: translate(.4em, .45em);
+    transform: translate(2.25em, .45em);
     pointer-events: none;
 }
 .fa-sun {
     position: absolute;
     z-index: 1;
-    transform: translate(2.25em, .45em);
+    transform: translate(.4em, .45em);
     pointer-events: none;
 }
 
@@ -187,7 +227,7 @@ input[type="checkbox"].switch {
             appearance: none;
     width: 2em;
     height: 1em;
-    background: #ddd;
+    background: var(--buttonhover);
     border-radius: 3em;
     position: relative;
     cursor: pointer;
@@ -197,7 +237,7 @@ input[type="checkbox"].switch {
 }
     
 input[type="checkbox"].switch:checked {
-    background: #444;
+    background: var(--buttonhover);
 }
     
 input[type="checkbox"].switch:after {
@@ -219,4 +259,15 @@ input[type="checkbox"].switch:after {
     
 input[type="checkbox"].switch:checked:after {
     left: calc(100% - 1em);
+}
+
+/* ------- MENU BUTTON ---------*/
+.fa-bars {
+    font-size: 1.75em;
+    align-self: center;
+}
+
+/* -------- CALENDER -----------*/
+.flatpickr-calendar {
+ font-family: Helvetica, sans-serif;
 }
