@@ -3,7 +3,11 @@ import flatpickr from "flatpickr";
 import 'emoji-picker-element';
 const { format } = require("date-fns")
 
-const sliderElement = document.querySelector('.switch'); 
+// buttons
+const themeSwitch = document.querySelector('.switch');
+const sidebarButton = document.querySelector('.button-sidebar'); 
+const addTaskButton = document.querySelector('.button-add-task');
+const addPageButton = document.querySelector('.button-add-page'); 
 // main 
 const pageIDElement = document.querySelector('.page-id');
 const emojiElement = document.querySelector('.emoji');
@@ -11,6 +15,7 @@ const emojiPicker = document.querySelector('emoji-picker');
 const titleElement = document.querySelector('.title');
 const tasklistElement = document.querySelector('.tasklist');
 // sidebar
+const sidebarElement = document.querySelector('.sidebar');
 const pagelistElement = document.querySelector('.pagelist');
 
 export default class View {
@@ -20,10 +25,8 @@ export default class View {
     }
 
     static loadButtons() {
-        const addTaskButton = document.querySelector('.button-add-task');
-        const addPageButton = document.querySelector('.button-add-page');
-
-        sliderElement.addEventListener("click", View.toggleDarkMode);
+        sidebarButton.addEventListener("click", View.toggleSidebar);
+        themeSwitch.addEventListener("click", View.toggleTheme);
         addTaskButton.addEventListener("click", View.addTask);
         addPageButton.addEventListener("click", View.addPage);
     }
@@ -296,11 +299,22 @@ export default class View {
             document.activeElement.blur();
         }
     }
+    
+    static toggleSidebar(e) {
+        sidebarElement.classList.toggle('collapsed');
+        if(sidebarElement.classList.contains('visable')) {
+            sidebarElement.classList.toggle('visable');
+        } else {
+            window.setTimeout(function(){
+                sidebarElement.classList.toggle('visable');
+            }, 200);
+        }
+    }
 
-    static toggleDarkMode(e) {
+    static toggleTheme(e) {
         document.body.classList.toggle("dark-mode");
-        sliderElement.closest('.switch_box').querySelector('.fa-sun').classList.toggle('hidden');
-        sliderElement.closest('.switch_box').querySelector('.fa-moon').classList.toggle('hidden');
+        themeSwitch.closest('.switch_box').querySelector('.fa-sun').classList.toggle('hidden');
+        themeSwitch.closest('.switch_box').querySelector('.fa-moon').classList.toggle('hidden');
         document.querySelector('emoji-picker').classList.toggle('light');
         if(document.body.classList.contains('dark-mode'))
             document.querySelectorAll('link[rel=stylesheet]')[2].setAttribute('href','../node_modules/flatpickr/dist/themes/dark.css');

@@ -45,16 +45,16 @@ View.displayPage(page1);
 // duplicate projects ------------
 // rename pages ----------
 // darkmode toggle ------------------
+// collapsable sidebar --------------
 
 // intitial load ~~
 // Add task button ~~ (add focus)
+// Style CSS ~~
 
-// refesh task only in view 
-// project progress bar
-// collapsable sidebar
-// Style CSS
+// refesh task only in view  
 // Clean up code
 
+// OPTIONAL ADDITIONS:
 // Home tab
 // daily tasks tab
 // weekly tasks tab
@@ -65,3 +65,4 @@ View.displayPage(page1);
 // task priority
 // move tasks
 // move projects
+// project progress bar
