@@ -1,6 +1,6 @@
 # todo-list
-A modern minimalism todo-list web app.<br/>
-👉 [Live Demo](https://bscottnz.github.io/todo/) 👈
+A modern minimalist todo-list web app.<br/>
+👉 [Live Demo](https://luk3-v.github.io/todo-list/) 👈
 
 ## Tasks:
  - Add/Delete Tasks
