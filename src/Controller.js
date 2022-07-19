@@ -20,7 +20,7 @@ export default class Controller {
         return pagelist;
     }
 
-    // --- Controls ----
+    // --- Task Controls ----
 
     static addTask(pageID) {
         let pagelist = Controller.getPageList();
@@ -84,6 +84,8 @@ export default class Controller {
         return task.dueDate;
     }
 
+    // --- Page Controls ----
+
     static getPage(pageID) {
         let pagelist = Controller.getPageList();
         let page = pagelist.find(page => page.id == pageID);
@@ -93,7 +95,7 @@ export default class Controller {
 
     static addPage() {
         let pagelist = Controller.getPageList();
-        pagelist.push(new Page('Untitled', '📄'));
+        pagelist.push(new Page('', '📄'));
 
         Controller.savePageList(pagelist);
     }

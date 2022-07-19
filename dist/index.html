@@ -23,19 +23,26 @@
         <div class="sidebar">
             <h3>Pages</h3>
             <div class="pagelist"></div>
-            <button class="button-add-page">+ Add Page</button>
+            <button class="button-add-page"><i class="fa-solid fa-plus"></i> Add Page</button>
         </div>
         <div class="main">
             <div class="container">
                 <span class="page-id" id=""></span>
                 <span class="emoji"></span>
                 <emoji-picker class="light hidden"></emoji-picker>
-                <h1 class="title" contenteditable="true"></h1>
+                <h1 class="title" contenteditable="true" data-placeholder="Untitled"></h1>
                 <div class="tasklist"></div>
-                <button class="button-add-task">+ Add Task</button>
+                <button class="button-add-task"><i class="fa-solid fa-plus"></i> Add Task</button>
+            </div>
+            <div class="empty-page hidden">
+                <h1>Empty</h1>
             </div>
         </div>
     </div>  
+    <a class="github" href="https://github.com/Luk3-V" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-github"></i>
+        <span>Luk3-V</span>
+    </a>
     <script src="main.js"></script>
 </body>
 </html>
