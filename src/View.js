@@ -332,9 +332,9 @@ export default class View {
         themeSwitch.closest('.switch_box').querySelector('.fa-moon').classList.toggle('hidden');
         document.querySelector('emoji-picker').classList.toggle('light');
         if(document.body.classList.contains('dark-mode'))
-            document.querySelectorAll('link[rel=stylesheet]')[2].setAttribute('href','../node_modules/flatpickr/dist/themes/dark.css');
+            document.querySelectorAll('link[rel=stylesheet]')[2].setAttribute('href','https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css');
         else
-            document.querySelectorAll('link[rel=stylesheet]')[2].setAttribute('href','../node_modules/flatpickr/dist/flatpickr.min.css');
+            document.querySelectorAll('link[rel=stylesheet]')[2].setAttribute('href','https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css');
 
         let page = Controller.getPage(pageIDElement.id);
         View.displayTaskList(page.tasklist);

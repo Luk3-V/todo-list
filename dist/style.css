@@ -160,6 +160,7 @@ emoji-picker {
     position: absolute;
     transform: translateX(-50px);
     border-radius: 2px;
+    box-shadow: 0 3px 13px rgb(0 0 0 / 8%);
 }
 
 .title {
@@ -219,6 +220,7 @@ span.task-date {
     position: absolute;
     z-index: 2;
     border-radius: 5px;
+    box-shadow: 0 3px 13px rgb(0 0 0 / 8%);
 }
 .edit-menu > li {
     padding: 7px;
@@ -230,6 +232,9 @@ span.task-date {
 .edit-menu > li > i {
     pointer-events: none;
 }   
+.edit-menu > li:last-child {
+    color: IndianRed;
+}
 
 /*--------- SIDEBAR -------*/
 
@@ -320,5 +325,5 @@ input[type="checkbox"].switch:checked:after {
 
 /* -------- CALENDER -----------*/
 .flatpickr-calendar {
- font-family: Helvetica, sans-serif;
+    font-family: Helvetica, sans-serif;
 }
